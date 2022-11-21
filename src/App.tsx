@@ -1,5 +1,5 @@
 import './i18n'
-import Header from './components/Header/Header'
+import Header from './components/header/Header'
 import { Toggle } from './themes/Toggle'
 import { useDarkMode } from './themes/useDarkMode'
 import { GlobalStyles, lightTheme, darkTheme } from './themes/globalStyles'
@@ -8,6 +8,8 @@ import useAuth from './hooks/useAuth'
 import RouteHandler from './route/RouteHandler'
 import './assets/sass/global/global.scss'
 import { appThemes } from './utils/constants'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   useAuth()
@@ -19,6 +21,7 @@ const App = () => {
       <GlobalStyles />
       <RouteHandler />
       <Toggle theme={theme} toggleTheme={toggleTheme} />
+      <ToastContainer />
     </ThemeProvider>
   )
 }

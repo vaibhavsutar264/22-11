@@ -1,8 +1,8 @@
 import { appRoutes } from '../utils/constants'
-import HomeScreen from '../components/Home/HomeScreen'
+import HomeScreen from '../components/home/HomeScreen'
 import Login from '../components/login/login-screen/Login'
 import SetPassword from '../components/login/set-password/SetPassword'
-import Notfound from '../components/Notfound/Notfound'
+import Notfound from '../components/notfound/Notfound'
 import PrivateRoutes from '../utils/PrivateRoutes'
 import ForgotPassword from '../components/login/forgot-password/ForgotPassword'
 

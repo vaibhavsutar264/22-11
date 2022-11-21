@@ -1,14 +1,15 @@
 import * as React from 'react'
 import { SyntheticEvent, useState, useEffect } from 'react'
-import { login } from '../../../redux-sample/slices/authSlice'
+import { login } from '../../../redux/slices/authSlice'
 import { UserLogin } from '../../../types/authType'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
-} from '../../../redux-sample/store'
+} from '../../../redux/store'
 import { useFormik } from 'formik'
 import schema from './Yup'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 // Importing Material UI
 import {
@@ -72,18 +73,18 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const dispatch = useAppDispatch()
-  const { user, isError, isSuccess, message } = useAppSelector(
+  const { user, isError, isSuccess, message, isAuthenticated } = useAppSelector(
     (state) => state.auth
   )
-  useEffect(() => {
-    if (isError) {
-      console.log(isError)
-    }
-    if (isSuccess) {
-      console.log('submited')
-      // dispatch(reset())
-    }
-  }, [isError, isSuccess, user, message, dispatch])
+  // useEffect(() => {
+  //   if (isError) {
+  //     toast.error(message)
+  //   }
+  //   if (isAuthenticated) {
+  //     toast.success('Logged in successful')
+  //     // dispatch(reset())
+  //   }
+  // }, [isError, message, isAuthenticated])
   // const { message, success } = data;
 
   useEffect(() => {
@@ -139,6 +140,7 @@ const Login = () => {
       passwordBoxElement.className = 'input-wrapper password-checkHide success'
       setOpen(false)
     } else {
+      // ;
       ;(e.target as HTMLInputElement).className = 'form-control input-custom'
       submitButtonElement.className = 'customBtn-01'
       passwordBoxElement.className = 'input-wrapper password-checkHide'

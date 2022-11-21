@@ -42,14 +42,14 @@ export const userSlice = createSlice({
       state.isLoading = false
       state.isError = true
       state.isAuthenticated = false
-      state.message = action.payload as string
+      state.message = action.payload.data.message as string
     },
     loginSuccess: (state, action) => {
       state.isLoading = false
       state.isSuccess = true
       state.isError = false
       // state.user = action.payload.data.token
-      state.user = action.payload.data.token
+      state.user = action.payload
       state.isAuthenticated = true
       state.message = action.payload.message
     },

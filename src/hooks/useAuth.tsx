@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react'
-import { useSelector as useAppSelector } from '../redux-sample/store'
+import { useSelector as useAppSelector } from '../redux/store'
 
 function useAuth() {
   const [loggedIn, setLoggedIn] = useState(false)

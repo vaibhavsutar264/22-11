@@ -1,12 +1,12 @@
 import React, { FormEvent, useState, useEffect, SyntheticEvent } from 'react'
 import { toast } from 'react-toastify'
 // import { reset } from '../../../redux/auth/authSlice'
-import { resetPassword } from '../../../redux-sample/slices/authSlice'
+import { resetPassword } from '../../../redux/slices/authSlice'
 import { Password } from '../../../types/authType'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
-} from '../../../redux-sample/store'
+} from '../../../redux/store'
 
 import useLocales from '../../../hooks/useLocales'
 import { useParams } from 'react-router-dom'

@@ -2,9 +2,10 @@ import React, { SyntheticEvent, useEffect, useState } from 'react'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
-} from '../../../redux-sample/store'
+} from '../../../redux/store'
 import { Email } from '../../../types/authType'
-import { forgotPassword } from '../../../redux-sample/slices/authSlice'
+import { forgotPassword } from '../../../redux/slices/authSlice'
+import { toast } from 'react-toastify'
 // Importing Material UI
 import {
   Box,
@@ -44,7 +45,9 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 const ForgotPassword = () => {
   const dispatch = useAppDispatch()
   // const alert = useAlert()
-  const { isError, message } = useAppSelector((state: any) => state.auth)
+  const { isError, isSuccess, message } = useAppSelector(
+    (state: any) => state.auth
+  )
   const [email, setEmail] = useState('')
 
   const forgotPasswordSubmit = (e: SyntheticEvent) => {
@@ -60,12 +63,13 @@ const ForgotPassword = () => {
   useEffect(() => {
     if (isError) {
       console.log('error in forgot password')
+      toast.error(message)
       // alert.error(error)
       // dispatch(clearErrors())
     }
 
-    if (message) {
-      console.log(message)
+    if (isSuccess) {
+      toast.success(message)
     }
   }, [isError, message])
   return (

@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react'
-import { useDispatch as useAppDispatch } from '../../redux-sample/store'
+import { useDispatch as useAppDispatch } from '../../redux/store'
 // import { logout } from '../../redux-sample/auth/authSlice'
-import { logout } from '../../redux-sample/slices/authSlice'
+import { logout } from '../../redux/slices/authSlice'
 import { useNavigate, Link } from 'react-router-dom'
 import Logo from '../../assets/images/CPaaSLogo.png'
 import '../../i18n'
@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
+import { toast } from 'react-toastify'
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -73,6 +74,7 @@ const Header = ({ toggleTheme }: { toggleTheme: any }) => {
   const logoutHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
     dispatch(logout())
+    toast.success('Logged Out')
     navigate('/')
   }
 

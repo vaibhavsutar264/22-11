@@ -5,7 +5,7 @@ export const apiRoutes = {
   SET_PASSWORD: '/api/v1/password/update',
   FORGOT_PASSWORD: '/api/v1/password/forgot',
   RESET_PASSWORD: '/api/v1/password/reset',
-  LOGOUT: '/api/v1/auth/logout',
+  LOGOUT: '/api/v1/logout',
 }
 
 export const apiHelpers = {
