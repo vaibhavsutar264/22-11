@@ -73,9 +73,12 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const dispatch = useAppDispatch()
-  const { user, isError, isSuccess, message, isAuthenticated } = useAppSelector(
-    (state) => state.auth
-  )
+  // const { isSuccess, message, isAuthenticated } = useAppSelector(
+  //   (state) => state.auth
+  // )
+  // const { isError, isSuccess, message, isAuthenticated } = useAppSelector(
+  //   (state) => state.user
+  // )
   // useEffect(() => {
   //   if (isError) {
   //     toast.error(message)
@@ -91,7 +94,7 @@ const Login = () => {
     if (getFromLocalStorage('token') && getFromLocalStorage('token') !== null) {
       navigate('/setpassword')
     }
-  }, [user, navigate])
+  }, [navigate])
 
   const formik = useFormik({
     initialValues: {
@@ -140,7 +143,7 @@ const Login = () => {
       passwordBoxElement.className = 'input-wrapper password-checkHide success'
       setOpen(false)
     } else {
-      ;(e.target as HTMLInputElement).className = 'form-control input-custom'
+      (e.target as HTMLInputElement).className = 'form-control input-custom'
       submitButtonElement.className = 'customBtn-01'
       passwordBoxElement.className = 'input-wrapper password-checkHide'
       setOpen(true)

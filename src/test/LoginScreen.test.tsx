@@ -30,7 +30,9 @@ test('Then it shuold show the user text on input box', () => {
 
   render(
     <BrowserRouter>
-      <Login />
+      <Provider store={store}>
+        <Login />
+      </Provider>
     </BrowserRouter>
   )
   const emailElement = screen.getByTestId('email-element')
