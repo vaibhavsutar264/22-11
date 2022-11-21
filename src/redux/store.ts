@@ -23,7 +23,7 @@ import {
 import thunk from 'redux-thunk'
 import { rootPersistConfig, rootReducer } from './rootReducer'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -44,11 +44,11 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >
 
-const persistor = persistStore(store)
+export const persistor = persistStore(store)
 
 const { dispatch } = store
 
 const useDispatch = () => useAppDispatch<AppDispatch>()
 const useSelector: TypedUseSelectorHook<RootState> = useAppSelector
 
-export { store, persistor, dispatch, useSelector, useDispatch }
+export { dispatch, useSelector, useDispatch }

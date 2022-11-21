@@ -297,6 +297,7 @@ const ResetPassword = () => {
                   </a>
                 </FormControl>
                 <FormControl
+                  className="input-wrapper submitBtn"
                   sx={{
                     display: 'flex',
                     alignItems: 'flex-end',

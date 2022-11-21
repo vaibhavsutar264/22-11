@@ -15,6 +15,7 @@
     "confirmPassword": "Confirm Password",
     "done": "Done",
     "resetPassword": "Reset Password",
-    "resetPasswordSubTitle":"Your new password must be different from previous password"
+    "resetPasswordSubTitle":"Your new password must be different from previous password",
+    "pageNotFound":"Page Not Found."
   }
 }

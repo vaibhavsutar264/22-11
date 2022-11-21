@@ -140,7 +140,6 @@ const Login = () => {
       passwordBoxElement.className = 'input-wrapper password-checkHide success'
       setOpen(false)
     } else {
-      // ;
       ;(e.target as HTMLInputElement).className = 'form-control input-custom'
       submitButtonElement.className = 'customBtn-01'
       passwordBoxElement.className = 'input-wrapper password-checkHide'

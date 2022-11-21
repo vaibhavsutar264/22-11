@@ -5,22 +5,12 @@
 .none {
   display: none;
 }
-#language-select {
-  min-width: 100px;
-  max-width: 100px;
-  width: 100px;
-  padding: 0.3rem 2.5rem 0.3rem 1rem !important;
-  border-radius: 4px;
-  background-position: right 1rem center;
-  margin-left: 30px;
-  cursor: pointer !important;
-}
 
 header {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 30px 30px 0px;
+  padding: 30px 7% 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +31,6 @@ header {
   }
   .container {
     width: 100%;
-    max-width: 1700px;
     display: flex;
     align-items: center;
     justify-content: space-between;

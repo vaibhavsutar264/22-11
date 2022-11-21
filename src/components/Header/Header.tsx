@@ -130,6 +130,12 @@ const Header = ({ toggleTheme }: { toggleTheme: any }) => {
             <li className="item">
               <FormGroup>
                 <FormControlLabel
+                  sx={{
+                    marginRight: 0,
+                    '& .MuiSwitch-root': {
+                      marginRight: -1,
+                    },
+                  }}
                   control={
                     <MaterialUISwitch
                       sx={{ m: 1 }}

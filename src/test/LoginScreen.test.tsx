@@ -10,19 +10,19 @@ import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 // import { TextField } from '@mui/material'
 
-const mockedUsedNavigate = jest.fn()
+// const mockedUsedNavigate = jest.fn()
 
-const mockDispatch = jest.fn()
+// const mockDispatch = jest.fn()
 
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useDispatch: () => mockDispatch,
-}))
+// jest.mock('react-redux', () => ({
+//   ...jest.requireActual('react-redux'),
+//   useDispatch: () => mockDispatch,
+// }))
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as any),
-  useNavigate: () => mockedUsedNavigate,
-}))
+// jest.mock('react-router-dom', () => ({
+//   ...(jest.requireActual('react-router-dom') as any),
+//   useNavigate: () => mockedUsedNavigate,
+// }))
 
 test('Then it shuold show the user text on input box', () => {
   const expectTextUser = 'vaibhav'
@@ -30,9 +30,7 @@ test('Then it shuold show the user text on input box', () => {
 
   render(
     <BrowserRouter>
-      <Provider store={store}>
-        <Login />
-      </Provider>
+      <Login />
     </BrowserRouter>
   )
   const emailElement = screen.getByTestId('email-element')

@@ -5,7 +5,9 @@ import { useDarkMode } from './themes/useDarkMode'
 import { GlobalStyles, lightTheme, darkTheme } from './themes/globalStyles'
 import { ThemeProvider } from 'styled-components'
 import useAuth from './hooks/useAuth'
-import RouteHandler from './route/RouteHandler'
+// import RouteHandler from './route/RouteHandler'
+// import { routes } from './route/Routes'
+import Routes from './route/Routes'
 import './assets/sass/global/global.scss'
 import { appThemes } from './utils/constants'
 import 'react-toastify/dist/ReactToastify.css'
@@ -19,7 +21,7 @@ const App = () => {
     <ThemeProvider theme={themeMode}>
       <Header toggleTheme={toggleTheme} />
       <GlobalStyles />
-      <RouteHandler />
+      <Routes />
       <Toggle theme={theme} toggleTheme={toggleTheme} />
       <ToastContainer />
     </ThemeProvider>

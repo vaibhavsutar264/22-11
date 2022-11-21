@@ -15,6 +15,7 @@
     "confirmPassword": "Passwort bestätigen",
     "done": "Fertig",
     "resetPassword": "Passwort zurücksetzen",
-    "resetPasswordSubTitle":"Ihr neues Passwort muss sich vom vorherigen Passwort unterscheiden"
+    "resetPasswordSubTitle":"Ihr neues Passwort muss sich vom vorherigen Passwort unterscheiden",
+    "pageNotFound":"Seite nicht gefunden."
   }
 }
