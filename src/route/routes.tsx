@@ -1,13 +1,13 @@
 import { appRoutes } from '../utils/constants'
 import { Suspense, lazy } from 'react'
-import HomeScreen from '../components/home/HomeScreen'
+// import HomeScreen from '../components/home/HomeScreen'
 import Loading from '../components/Loader/Loading'
 // import Login from '../components/login/login-screen/Login'
-import SetPassword from '../components/login/set-password/SetPassword'
-import Notfound from '../components/notfound/Notfound'
+// import SetPassword from '../components/login/set-password/SetPassword'
+// import Notfound from '../components/notfound/Notfound'
 import PrivateRoutes from '../utils/PrivateRoutes'
-import ForgotPassword from '../components/login/forgot-password/ForgotPassword'
-import ResetPassword from '../components/login/reset-password/ResetPassword'
+// import ForgotPassword from '../components/login/forgot-password/ForgotPassword'
+// import ResetPassword from '../components/login/reset-password/ResetPassword'
 import { useRoutes } from 'react-router-dom'
 
 // eslint-disable-next-line react/display-name
@@ -58,40 +58,10 @@ function Routes() {
 }
 
 const Login = Loadable(lazy(() => import('../components/login/login-screen/Login')));
-
-// const Login = Loadable(
-//   lazy(async () => ({
-//     default: (await import('../components/login/login-screen/Login')).Login,
-//   }))
-// )
-// const ResetPassword = Loadable(
-//   lazy(async () => ({
-//     default: (await import('../components/login/reset-password/ResetPassword'))
-//       .ResetPassword,
-//   }))
-// )
-// const ForgotPassword = Loadable(
-//   lazy(async () => ({
-//     default: (
-//       await import('../components/login/forgot-password/ForgotPassword')
-//     ).ForgotPassword,
-//   }))
-// )
-// const SetPassword = Loadable(
-//   lazy(async () => ({
-//     default: (await import('../components/login/set-password/SetPassword'))
-//       .SetPassword,
-//   }))
-// )
-// const Notfound = Loadable(
-//   lazy(async () => ({
-//     default: (await import('../components/notfound/Notfound')).Notfound,
-//   }))
-// )
-// const HomeScreen = Loadable(
-//   lazy(async () => ({
-//     default: (await import('../components/home/HomeScreen')).HomeScreen,
-//   }))
-// )
+const ResetPassword = Loadable(lazy(() => import('../components/login/reset-password/ResetPassword')));
+const ForgotPassword = Loadable(lazy(() => import('../components/login/forgot-password/ForgotPassword')));
+const SetPassword = Loadable(lazy(() => import('../components/login/set-password/SetPassword')));
+const Notfound = Loadable(lazy(() => import('../components/notfound/Notfound')));
+const HomeScreen = Loadable(lazy(() => import('../components/home/HomeScreen')));
 
 export default Routes

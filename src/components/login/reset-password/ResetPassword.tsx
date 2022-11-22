@@ -1,15 +1,17 @@
 import React, { FormEvent, useState, useEffect, SyntheticEvent } from 'react'
 import { toast } from 'react-toastify'
-// import { reset } from '../../../redux/auth/authSlice'
+import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
 import { resetPassword } from '../../../redux/slices/authSlice'
+import { yupResolver } from '@hookform/resolvers/yup';
+// import { reset, updatePassword } from '../../../redux/auth/authSlice'
 import { Password } from '../../../types/authType'
+// import { useAppDispatch, useAppSelector } from '../../../redux/store'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
 } from '../../../redux/store'
 
-import useLocales from '../../../hooks/useLocales'
-import { useParams } from 'react-router-dom'
 import {
   Box,
   TextField,
@@ -35,6 +37,10 @@ import VoiceImg from '../../../assets/images/svg/Voice.svg'
 import ChatImg from '../../../assets/images/svg/Chat.svg'
 import VideoImg from '../../../assets/images/svg/Video.svg'
 import WhatsappImg from '../../../assets/images/svg/Whatsapp.svg'
+import useLocales from '../../../hooks/useLocales'
+import BackgroundBox from '../../common/elements/backGroundBox'
+import BannerBg from '../../common/elements/banner'
+import { useParams } from 'react-router-dom';
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -58,8 +64,60 @@ interface State {
 }
 
 const ResetPassword = () => {
+  const [password, setPassword] = useState('')
+  // const [password, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [open, setOpen] = useState(false)
+  const { isError, isSuccess, message } = useAppSelector(
+    (state: any) => state.auth || {}
+  )
+  const dispatch = useAppDispatch()
   const { token } = useParams()
   const { t } = useLocales()
+  const LoginSchema = Yup.object().shape({
+    password: Yup.string().required('Password is required !!').min(8),
+    confirmPassword:Yup.string().required('Password is required !!').min(8),
+  });
+
+  
+  const defaultValues = {
+    password: '',
+    confirmPassword: '',
+    // remember: true,
+  };
+
+  const methods = useForm({
+    resolver: yupResolver(LoginSchema),
+    defaultValues,
+  });
+
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    register
+  } = methods;
+
+  const onSubmit = async ( data: any ) => {
+    // e.preventDefault()
+    if (password !== confirmPassword) {
+      console.log('password and confirm password not same')
+      toast.error('password and confirm password not same')
+      return
+    }
+    try {
+      const userPassword: Password = {
+        password: password,
+        confirmPassword: confirmPassword,
+      }
+      await dispatch(resetPassword(token, data))
+    } catch (error) {
+      console.error(error);
+      reset();
+    }
+    
+  };
   const [values, setValues] = React.useState<State>({
     amount: '',
     password: '',
@@ -80,39 +138,18 @@ const ResetPassword = () => {
   ) => {
     event.preventDefault()
   }
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [open, setOpen] = useState(false)
-  const { isError, isSuccess, message } = useAppSelector(
-    (state: any) => state.auth || {}
-  )
-  const dispatch = useAppDispatch()
   useEffect(() => {
     if (isError) {
       console.log(message)
-      toast.error('password and confirm password not same')
+      // toast.error('password and confirm password not same')
     }
     if (isSuccess) {
-      toast.success(message)
+      // toast.success(message)
       setPassword('')
       setConfirmPassword('')
       // dispatch(reset())
     }
   }, [isError, isSuccess, message, dispatch])
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      console.log('password and confirm password not same')
-      toast.error('password and confirm password not same')
-      return
-    }
-    const userPassword: Password = {
-      password: password,
-      confirmPassword: confirmPassword,
-    }
-    dispatch(resetPassword(token, userPassword))
-  }
 
   const handlePasswordChange = (e: SyntheticEvent) => {
     e.preventDefault()
@@ -157,41 +194,10 @@ const ResetPassword = () => {
   return (
     <Box className="account__screen">
       {/* ACCOUNT SCREEN BANNER START*/}
-      <picture>
-        {' '}
-        <source srcSet={Background} type="image/webp" />{' '}
-        <source srcSet={Background} type="image/png" />{' '}
-        <img src={Background} className="account__screen__banner" alt="" />{' '}
-      </picture>
+      <BannerBg />
       {/* ACCOUNT SCREEN BANNER END */}
       {/* ACCOUNT SCREEN ANIMATION START */}
-      <Box sx={{ flexGrow: 1 }} className="account__form__animation">
-        <div className="floating-wrapper">
-          <div className="floating-wrapper-inner">
-            <div className="floating-item floating-item-1">
-              <img src={ChartImg} alt="Chart" />
-            </div>
-            <div className="floating-item floating-item-2">
-              <img src={PieChartImg} alt="Pie Chart" />
-            </div>
-            <div className="floating-item floating-item-3">
-              <img src={SalesImg} alt="Sales" />
-            </div>
-            <div className="floating-item floating-item-4">
-              <img src={VoiceImg} alt="Voice" />
-            </div>
-            <div className="floating-item floating-item-5">
-              <img src={ChatImg} alt="Chat" />
-            </div>
-            <div className="floating-item floating-item-6">
-              <img src={VideoImg} alt="Video" />
-            </div>
-            <div className="floating-item floating-item-7">
-              <img src={WhatsappImg} alt="Whatsapp" />
-            </div>
-          </div>
-        </div>
-      </Box>
+      <BackgroundBox />
       {/* ACCOUNT SCREEN ANIMATION END */}
       {/* ACCOUNT FORM START */}
       <Box
@@ -205,10 +211,10 @@ const ResetPassword = () => {
             <p className="sub__title">{t<string>('resetPasswordSubTitle')}</p>
           </Box>
           <Box sx={{ width: 1 }} className="account__form__error">
-              <p className="error__msg"> { message && message } </p>
+              <p className="error__msg">{message && message}</p>
             </Box>
           <Box sx={{ flexGrow: 1 }} className="account__form__body">
-            <form onSubmit={handleSubmit} action="#" method="post">
+            <form onSubmit={handleSubmit(onSubmit)} action="#" method="post">
               <FormGroup>
                 <FormControl
                   className="input-wrapper"
@@ -230,15 +236,17 @@ const ResetPassword = () => {
                     label={t<string>('password')}
                     variant="standard"
                     sx={{ width: 1 }}
-                    name="password"
+                    // name="password"
                     type="password"
                     inputProps={{
                       'data-testid': 'password-element',
                       autoComplete: 'off',
                     }}
                     value={password}
-                    onChange={handlePasswordChange}
+                    onInput={handlePasswordChange}
+                    {...register('password')}
                   />
+                  <p className="text-error">{errors.password ?.message}</p>
                 </FormControl>
 
                 <FormControl
@@ -263,10 +271,11 @@ const ResetPassword = () => {
                     sx={{ width: 1 }}
                     type={values.showPassword ? 'text' : 'password'}
                     autoComplete="false"
-                    name="password"
+                    // name="password"
                     inputProps={{ 'data-testid': 'confirm-password-element' }}
                     value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
+                    onInput={handleConfirmPasswordChange}
+                    {...register('confirmPassword')}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -287,6 +296,7 @@ const ResetPassword = () => {
                       ),
                     }}
                   />
+                  <p className="text-error">{errors.confirmPassword ?.message}</p>
                 </FormControl>
                 <FormControl
                   className="input-wrapper password-checkHide"
@@ -315,10 +325,10 @@ const ResetPassword = () => {
                   <ColorButton
                     variant="contained"
                     id="btn-enable-style"
-                    type="submit"
                     data-testid="button-element"
+                    type="submit"
                     name="submit"
-                    disabled={open}
+                    // disabled={open}
                     className="customBtn-01"
                   >
                     {t<string>('done')}
