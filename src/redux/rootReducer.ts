@@ -19,22 +19,21 @@ const rootPersistConfig = {
   key: 'root',
   storage,
   keyPrefix: 'redux-',
-  whitelist: [],
-  blacklist: [],
+  // whitelist: [],
+  // blacklist: [],
   transforms: [encryptor],
 }
 
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  keyPrefix: 'redux-',
-  // whitelist: ['sortBy', 'filters'],
-  transforms: [encryptor],
-}
+// const authPersistConfig = {
+//   key: 'auth',
+//   storage,
+//   keyPrefix: 'redux-',
+//   // whitelist: ['sortBy', 'filters'],
+//   transforms: [encryptor],
+// }
 
 const rootReducer = combineReducers({
-  auth: persistReducer(authPersistConfig, authReducer),
-  //auth: authReducer
+  auth: authReducer,
 })
 
 export { rootPersistConfig, rootReducer }

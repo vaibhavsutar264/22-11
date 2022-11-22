@@ -84,16 +84,16 @@ const SetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [open, setOpen] = useState(false)
   const { isError, isSuccess, message } = useAppSelector(
-    (state: any) => state.auth
+    (state: any) => state.auth || {}
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (isError) {
       console.log(message)
-      toast.error('password and confirm password not same')
+      // toast.error('password and confirm password not same')
     }
     if (isSuccess) {
-      toast.success(message)
+      // toast.success(message)
       setPassword('')
       setConfirmPassword('')
       // dispatch(reset())
@@ -204,6 +204,9 @@ const SetPassword = () => {
             <h3 className="title">{t<string>('setPassword')}</h3>
             <p className="sub__title">{t<string>('generatePassword')}</p>
           </Box>
+          <Box sx={{ width: 1 }} className="account__form__error">
+              <p className="error__msg">{message && message}</p>
+            </Box>
           <Box sx={{ flexGrow: 1 }} className="account__form__body">
             <form onSubmit={handleSubmit} action="#" method="post">
               <FormGroup>
@@ -229,7 +232,10 @@ const SetPassword = () => {
                     sx={{ width: 1 }}
                     name="password"
                     type="password"
-                    data-testid="password-element"
+                    inputProps={{
+                      'data-testid': 'password-element',
+                      autoComplete: 'off',
+                    }}
                     value={newPassword}
                     onChange={handlePasswordChange}
                   />
@@ -258,7 +264,7 @@ const SetPassword = () => {
                     type={values.showPassword ? 'text' : 'password'}
                     autoComplete="false"
                     name="password"
-                    data-testid="confirm-password-element"
+                    inputProps={{ 'data-testid': 'confirm-password-element' }}
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     InputProps={{
@@ -309,6 +315,7 @@ const SetPassword = () => {
                   <ColorButton
                     variant="contained"
                     id="btn-enable-style"
+                    data-testid="button-element"
                     type="submit"
                     name="submit"
                     disabled={open}

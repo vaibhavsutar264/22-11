@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { SyntheticEvent, useState, useEffect } from 'react'
 import { login } from '../../../redux/slices/authSlice'
-import { UserLogin } from '../../../types/authType'
+import { AuthState, UserLogin } from '../../../types/authType'
 import {
+  RootState,
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
 } from '../../../redux/store'
@@ -42,6 +43,7 @@ import useLocales from '../../../hooks/useLocales'
 import { getFromLocalStorage } from '../../../hooks/useLocalStorage'
 import BackgroundBox from '../../common/elements/backGroundBox'
 import BannerBg from '../../common/elements/banner'
+import { useSelector } from 'react-redux'
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -73,28 +75,28 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const dispatch = useAppDispatch()
-  // const { isSuccess, message, isAuthenticated } = useAppSelector(
-  //   (state) => state.auth
+  // const { isError, isSuccess, message, isAuthenticated } = useSelector<RootState, AuthState>(
+  //   (state: RootState) => state.auth  || {}
   // )
-  // const { isError, isSuccess, message, isAuthenticated } = useAppSelector(
-  //   (state) => state.user
-  // )
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message)
-  //   }
-  //   if (isAuthenticated) {
-  //     toast.success('Logged in successful')
-  //     // dispatch(reset())
-  //   }
-  // }, [isError, message, isAuthenticated])
+  const { user,isError, isSuccess, message, isAuthenticated } = useAppSelector(
+    (state: any) => state.auth  || {}
+  )
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isAuthenticated) {
+      toast.success('Logged in successful')
+      // dispatch(reset())
+    }
+  }, [isError, message, isAuthenticated]) 
   // const { message, success } = data;
 
   useEffect(() => {
     if (getFromLocalStorage('token') && getFromLocalStorage('token') !== null) {
       navigate('/setpassword')
     }
-  }, [navigate])
+  }, [user,navigate])
 
   const formik = useFormik({
     initialValues: {
@@ -103,11 +105,11 @@ const Login = () => {
     },
     validationSchema: schema,
     onSubmit: () => {
-      const user: UserLogin = {
+      const userDetails: UserLogin = {
         email: email,
         password: password,
       }
-      dispatch(login(user))
+      dispatch(login(userDetails))
       // action.resetForm();
     },
   })
@@ -191,6 +193,9 @@ const Login = () => {
             <Box sx={{ width: 1 }} className="account__form__header">
               <h3 className="title">{t<string>('loginHeading')}</h3>
               <p className="sub__title">{t<string>('enterEmailAndPassword')}</p>
+            </Box>
+            <Box sx={{ width: 1 }} className="account__form__error">
+              <p className="error__msg"> { isError && message } </p>
             </Box>
             <Box sx={{ flexGrow: 1 }} className="account__form__body">
               <form onSubmit={handleSubmit} action="#" method="post">

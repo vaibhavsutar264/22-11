@@ -84,7 +84,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [open, setOpen] = useState(false)
   const { isError, isSuccess, message } = useAppSelector(
-    (state: any) => state.auth
+    (state: any) => state.auth || {}
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -204,6 +204,9 @@ const ResetPassword = () => {
             <h3 className="title">{t<string>('resetPassword')}</h3>
             <p className="sub__title">{t<string>('resetPasswordSubTitle')}</p>
           </Box>
+          <Box sx={{ width: 1 }} className="account__form__error">
+              <p className="error__msg"> { message && message } </p>
+            </Box>
           <Box sx={{ flexGrow: 1 }} className="account__form__body">
             <form onSubmit={handleSubmit} action="#" method="post">
               <FormGroup>
@@ -229,7 +232,10 @@ const ResetPassword = () => {
                     sx={{ width: 1 }}
                     name="password"
                     type="password"
-                    data-testid="password-element"
+                    inputProps={{
+                      'data-testid': 'password-element',
+                      autoComplete: 'off',
+                    }}
                     value={password}
                     onChange={handlePasswordChange}
                   />
@@ -258,7 +264,7 @@ const ResetPassword = () => {
                     type={values.showPassword ? 'text' : 'password'}
                     autoComplete="false"
                     name="password"
-                    data-testid="confirm-password-element"
+                    inputProps={{ 'data-testid': 'confirm-password-element' }}
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     InputProps={{
@@ -310,6 +316,7 @@ const ResetPassword = () => {
                     variant="contained"
                     id="btn-enable-style"
                     type="submit"
+                    data-testid="button-element"
                     name="submit"
                     disabled={open}
                     className="customBtn-01"

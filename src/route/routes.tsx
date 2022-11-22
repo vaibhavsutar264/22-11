@@ -2,7 +2,7 @@ import { appRoutes } from '../utils/constants'
 import { Suspense, lazy } from 'react'
 import HomeScreen from '../components/home/HomeScreen'
 import Loading from '../components/Loader/Loading'
-import Login from '../components/login/login-screen/Login'
+// import Login from '../components/login/login-screen/Login'
 import SetPassword from '../components/login/set-password/SetPassword'
 import Notfound from '../components/notfound/Notfound'
 import PrivateRoutes from '../utils/PrivateRoutes'
@@ -56,6 +56,8 @@ function Routes() {
     },
   ])
 }
+
+const Login = Loadable(lazy(() => import('../components/login/login-screen/Login')));
 
 // const Login = Loadable(
 //   lazy(async () => ({

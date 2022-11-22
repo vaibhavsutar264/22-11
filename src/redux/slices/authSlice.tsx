@@ -42,14 +42,14 @@ export const userSlice = createSlice({
       state.isLoading = false
       state.isError = true
       state.isAuthenticated = false
-      state.message = action.payload as string
+      state.message = action.payload.message as string
     },
     loginSuccess: (state, action) => {
       state.isLoading = false
       state.isSuccess = true
       state.isError = false
       // state.user = action.payload.data.token
-      state.user = action.payload
+      state.user = action.payload.token
       state.isAuthenticated = true
       state.message = action.payload.message
     },
@@ -101,16 +101,16 @@ export const login = (userData: UserLogin) => {
       //   }
       // }
       if (response) {
-        // setInLocalStorage(
-        //   localStorageVar.USER_VAR,
-        //   JSON.stringify(response.data)
-        // )
+        setInLocalStorage(
+          localStorageVar.USER_VAR,
+          JSON.stringify(response.data)
+        )
         const token: any = response.data.token
         if (token) {
           setInLocalStorage(localStorageVar.TOKEN_VAR, token)
         }
       }
-      dispatch(userSlice.actions.loginSuccess(response))
+      dispatch(userSlice.actions.loginSuccess(response.data))
       return response.data
     } catch (error) {
       console.log(error)
@@ -124,6 +124,7 @@ export const logout = () => {
   return async () => {
     try {
       removeFromLocalStorage(localStorageVar.TOKEN_VAR)
+      removeFromLocalStorage(localStorageVar.USER_VAR)
       await user.logout()
       dispatch(userSlice.actions.logOutSuccess())
     } catch (error) {
@@ -168,7 +169,7 @@ export const resetPassword = (token: any, passwordData: Password) => {
       //     passwordData
       // )
       const { data } = await user.resetPassword(token, passwordData)
-      dispatch(userSlice.actions.resetPasswordSuccess(data.success))
+      dispatch(userSlice.actions.resetPasswordSuccess(data))
     } catch (error) {
       dispatch(userSlice.actions.hasError(error))
     }
