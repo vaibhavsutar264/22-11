@@ -44,7 +44,6 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 
 const ForgotPassword = () => {
   const dispatch = useAppDispatch()
-  // const alert = useAlert()
   const { isError, isSuccess, message } = useAppSelector(
     (state: any) => state.auth
   )
@@ -52,8 +51,6 @@ const ForgotPassword = () => {
 
   const forgotPasswordSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
-    // const userEmail = new FormData()
-    // userEmail.set('email', email)
     const userEmail: Email = {
       email: email,
     }
@@ -64,14 +61,12 @@ const ForgotPassword = () => {
     if (isError) {
       console.log('error in forgot password')
       toast.error(message)
-      // alert.error(error)
-      // dispatch(clearErrors())
     }
 
     if (isSuccess) {
       toast.success(message)
     }
-  }, [isError, message])
+  }, [isError,isSuccess, message])
   return (
     <Box className="account__screen">
       {/* ACCOUNT SCREEN BANNER START*/}

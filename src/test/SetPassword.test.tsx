@@ -106,20 +106,20 @@ describe('App', () => {
     expect(buttonElement).toBeEnabled()
   })
 
-//   test('Then it have both values', async () => {
-//     const confirmPasswordElement = screen.getByTestId(
-//       'confirm-password-element'
-//     ) as HTMLInputElement
-//     const passwordElement = screen.getByTestId('password-element') as HTMLInputElement
-//     typeIntoForm({ password: 'Vaibhav@123', confirmPassword: 'Vaibhav@1234' })
-//     expect(passwordElement.value).toBe('Vaibhav@1234')
-//     expect(confirmPasswordElement.value).toBe('Vaibhav@1234')
-//     const NavigateToSetpasswordScreen = screen.getByRole('button', {
-//       name: /Done/i,
-//     })
-//     const errorafterwrongcredentials =
-//       'password and confirm password does not match'
-//     userEvent.click(NavigateToSetpasswordScreen)
-//     expect(errorafterwrongcredentials).toBeTruthy()
-//   })
+  test('Then it have both values', async () => {
+    const confirmPasswordElement = screen.getByTestId(
+      'confirm-password-element'
+    ) as HTMLInputElement
+    const passwordElement = screen.getByTestId('password-element') as HTMLInputElement
+    typeIntoForm({ password: 'Vaibhav@123', confirmPassword: 'Vaibhav@1234' })
+    expect(passwordElement.value).toBe('Vaibhav@123')
+    expect(confirmPasswordElement.value).toBe('Vaibhav@1234')
+    const NavigateToSetpasswordScreen = screen.getByRole('button', {
+      name: /Done/i,
+    })
+    const errorafterwrongcredentials =
+      'Password and Confirm Password must match'
+    userEvent.click(NavigateToSetpasswordScreen)
+    expect(errorafterwrongcredentials).toBeTruthy()
+  })
 })

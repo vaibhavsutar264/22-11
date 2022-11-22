@@ -4,9 +4,7 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { resetPassword } from '../../../redux/slices/authSlice'
 import { yupResolver } from '@hookform/resolvers/yup';
-// import { reset, updatePassword } from '../../../redux/auth/authSlice'
 import { Password } from '../../../types/authType'
-// import { useAppDispatch, useAppSelector } from '../../../redux/store'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
@@ -65,7 +63,6 @@ interface State {
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('')
-  // const [password, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [open, setOpen] = useState(false)
   const { isError, isSuccess, message } = useAppSelector(
@@ -76,7 +73,7 @@ const ResetPassword = () => {
   const { t } = useLocales()
   const LoginSchema = Yup.object().shape({
     password: Yup.string().required('Password is required !!').min(8),
-    confirmPassword:Yup.string().required('Password is required !!').min(8),
+    confirmPassword:Yup.string().required('Password is required !!').min(8).oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
   
@@ -100,7 +97,6 @@ const ResetPassword = () => {
   } = methods;
 
   const onSubmit = async ( data: any ) => {
-    // e.preventDefault()
     if (password !== confirmPassword) {
       console.log('password and confirm password not same')
       toast.error('password and confirm password not same')
@@ -141,10 +137,8 @@ const ResetPassword = () => {
   useEffect(() => {
     if (isError) {
       console.log(message)
-      // toast.error('password and confirm password not same')
     }
     if (isSuccess) {
-      // toast.success(message)
       setPassword('')
       setConfirmPassword('')
       // dispatch(reset())
@@ -328,7 +322,7 @@ const ResetPassword = () => {
                     data-testid="button-element"
                     type="submit"
                     name="submit"
-                    // disabled={open}
+                    disabled={open}
                     className="customBtn-01"
                   >
                     {t<string>('done')}

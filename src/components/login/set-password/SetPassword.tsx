@@ -3,10 +3,8 @@ import { toast } from 'react-toastify'
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-// import { reset, updatePassword } from '../../../redux/auth/authSlice'
 import { updatePassword } from '../../../redux/slices/authSlice'
 import { Password } from '../../../types/authType'
-// import { useAppDispatch, useAppSelector } from '../../../redux/store'
 import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
@@ -64,7 +62,6 @@ interface State {
 
 const SetPassword = () => {
   const [password, setPassword] = useState('')
-  // const [password, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [open, setOpen] = useState(false)
   const { isError, isSuccess, message } = useAppSelector(
@@ -74,14 +71,13 @@ const SetPassword = () => {
   const { t } = useLocales()
   const LoginSchema = Yup.object().shape({
     password: Yup.string().required('Password is required !!').min(8),
-    confirmPassword:Yup.string().required('Password is required !!').min(8),
+    confirmPassword:Yup.string().required('Password is required !!').min(8).oneOf([Yup.ref('password'), null], 'Password and Confirm Password must match'),
   });
 
   
   const defaultValues = {
     password: '',
     confirmPassword: '',
-    // remember: true,
   };
 
   const methods = useForm({
@@ -98,7 +94,6 @@ const SetPassword = () => {
   } = methods;
 
   const onSubmit = async ( data: any ) => {
-    // e.preventDefault()
     if (password !== confirmPassword) {
       console.log('password and confirm password not same')
       toast.error('password and confirm password not same')
@@ -139,10 +134,8 @@ const SetPassword = () => {
   useEffect(() => {
     if (isError) {
       console.log(message)
-      // toast.error('password and confirm password not same')
     }
     if (isSuccess) {
-      // toast.success(message)
       setPassword('')
       setConfirmPassword('')
       // dispatch(reset())
@@ -326,7 +319,7 @@ const SetPassword = () => {
                     data-testid="button-element"
                     type="submit"
                     name="submit"
-                    // disabled={open}
+                    disabled={open}
                     className="customBtn-01"
                   >
                     {t<string>('done')}

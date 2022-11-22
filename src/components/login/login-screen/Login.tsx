@@ -75,9 +75,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const dispatch = useAppDispatch()
-  // const { isError, isSuccess, message, isAuthenticated } = useSelector<RootState, AuthState>(
-  //   (state: RootState) => state.auth  || {}
-  // )
   const { user,isError, isSuccess, message, isAuthenticated } = useAppSelector(
     (state: any) => state.auth  || {}
   )
@@ -90,7 +87,6 @@ const Login = () => {
       // dispatch(reset())
     }
   }, [isError, message, isAuthenticated]) 
-  // const { message, success } = data;
 
   useEffect(() => {
     if (getFromLocalStorage('token') && getFromLocalStorage('token') !== null) {
@@ -110,7 +106,6 @@ const Login = () => {
         password: password,
       }
       dispatch(login(userDetails))
-      // action.resetForm();
     },
   })
   const { handleSubmit, handleChange, touched, errors } = formik
@@ -132,7 +127,6 @@ const Login = () => {
   const handlePasswordChange = (e: SyntheticEvent) => {
     e.preventDefault()
     setPassword((e.target as HTMLInputElement).value)
-    // const patternVariable ="(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9])(?=.*?[!@#$%^&*+`~'=?|][()-<>/]).{8,}"; //uppercase lowercase symbol and number
     const patternVariable = '.{5,}'
     const submitButtonElement = document.getElementById(
       'btn-enable-style'
